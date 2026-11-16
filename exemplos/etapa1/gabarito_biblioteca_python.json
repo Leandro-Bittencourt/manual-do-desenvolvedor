@@ -1,0 +1,167 @@
+{
+  "projeto": "biblioteca_python",
+  "descricao": "Projeto 1 — Python + PostgreSQL (relacional)",
+  "criterios": [
+    "Requisito -> código: elementos que implementam diretamente o comportamento do requisito (método de serviço, funções de validação e de cálculo e, no projeto HTML, também o formulário e a função de tela). Para o RNF-01 (persistência), a classe de acesso ao banco de dados.",
+    "Requisito -> teste: testes que verificam o requisito.",
+    "Teste -> código: elementos de produção chamados diretamente no corpo do teste (inclui classes instanciadas, getters e referências a métodos). Dublês de teste e funções auxiliares não entram."
+  ],
+  "vinculos": [
+    {
+      "origem": "RF-01",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_livro"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/biblioteca/servicos.py::validar_isbn"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_leitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/biblioteca/servicos.py::validar_email"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/biblioteca/servicos.py::calcular_multa"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/biblioteca/modelos.py::Emprestimo.dias_de_atraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.buscar_livros"
+    },
+    {
+      "origem": "RNF-01",
+      "destino": "src/biblioteca/repositorio.py::RepositorioPostgres"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "tests/test_livros.py::test_rf01_cadastra_livro_com_isbn_valido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "tests/test_livros.py::test_rejeita_isbn_invalido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "tests/test_livros.py::test_rejeita_isbn_repetido"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "tests/test_leitores.py::test_cadastra_leitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "tests/test_leitores.py::test_rf02_rejeita_email_invalido"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "tests/test_emprestimos.py::test_empresta_livro_disponivel"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "tests/test_emprestimos.py::test_limite_de_tres_emprestimos_ativos"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "tests/test_emprestimos.py::test_devolucao_no_prazo_nao_gera_multa"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "tests/test_emprestimos.py::test_multa_por_dias_de_atraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "tests/test_busca.py::test_busca_por_titulo_ou_autor_sem_diferenciar_maiusculas"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rf01_cadastra_livro_com_isbn_valido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rf01_cadastra_livro_com_isbn_valido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_livro"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rejeita_isbn_invalido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rejeita_isbn_invalido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_livro"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rejeita_isbn_repetido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_livros.py::test_rejeita_isbn_repetido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_livro"
+    },
+    {
+      "origem": "tests/test_leitores.py::test_cadastra_leitor",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_leitores.py::test_cadastra_leitor",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_leitor"
+    },
+    {
+      "origem": "tests/test_leitores.py::test_rf02_rejeita_email_invalido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_leitores.py::test_rf02_rejeita_email_invalido",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_leitor"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_empresta_livro_disponivel",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_limite_de_tres_emprestimos_ativos",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_devolucao_no_prazo_nao_gera_multa",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_devolucao_no_prazo_nao_gera_multa",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_multa_por_dias_de_atraso",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "tests/test_emprestimos.py::test_multa_por_dias_de_atraso",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "tests/test_busca.py::test_busca_por_titulo_ou_autor_sem_diferenciar_maiusculas",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca"
+    },
+    {
+      "origem": "tests/test_busca.py::test_busca_por_titulo_ou_autor_sem_diferenciar_maiusculas",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.cadastrar_livro"
+    },
+    {
+      "origem": "tests/test_busca.py::test_busca_por_titulo_ou_autor_sem_diferenciar_maiusculas",
+      "destino": "src/biblioteca/servicos.py::ServicoBiblioteca.buscar_livros"
+    }
+  ]
+}

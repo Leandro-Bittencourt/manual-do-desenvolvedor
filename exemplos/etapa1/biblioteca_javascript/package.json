@@ -1,0 +1,12 @@
+{
+  "name": "biblioteca-javascript",
+  "version": "1.0.0",
+  "description": "Projeto controlado 3 — JavaScript (Node.js) + MongoDB (modelo de documentos)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "mongodb": "^6.12.0"
+  }
+}

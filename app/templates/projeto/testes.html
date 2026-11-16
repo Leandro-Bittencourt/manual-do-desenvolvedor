@@ -1,0 +1,23 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, lista_vinculos %}
+{% block projeto %}
+{% if not linhas %}
+  <section class="cartao"><p class="vazio">Nenhum caso de teste foi encontrado (arquivos <code>test_*.py</code>).</p></section>
+{% else %}
+<div class="tabela-rolagem">
+<table class="tabela">
+  <thead><tr><th>Caso de teste</th><th>Arquivo</th><th>Requisitos verificados</th><th>Código exercitado</th></tr></thead>
+  <tbody>
+  {% for l in linhas %}
+    <tr>
+      <td>{{ link_elemento(projeto, l.teste) }}</td>
+      <td class="localizacao">{{ l.teste.arquivo }}:{{ l.teste.linha_inicio }}</td>
+      <td>{{ lista_vinculos(projeto, l.requisitos, 'origem', 'Nenhum requisito') }}</td>
+      <td>{{ lista_vinculos(projeto, l.codigo, 'destino', 'Nenhuma chamada identificada') }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

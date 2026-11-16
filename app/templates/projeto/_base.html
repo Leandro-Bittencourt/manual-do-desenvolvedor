@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titulo %}{{ projeto.nome }} · Manual do Desenvolvedor{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-projeto">
+  <div>
+    <p class="migalha"><a href="{{ url_for('main.painel') }}">Projetos</a> /</p>
+    <h1>{{ projeto.nome }}</h1>
+    <p class="meta">Versão {{ versao.numero }} · {{ versao.nome_arquivo }} · enviada em {{ versao.enviado_em|data }}</p>
+  </div>
+</div>
+<nav class="abas" aria-label="Seções do projeto">
+  <a href="{{ url_for('main.visao_geral', projeto_id=projeto.id) }}" {% if aba == 'visao' %}aria-current="page"{% endif %}>Visão geral</a>
+  <a href="{{ url_for('main.requisitos', projeto_id=projeto.id) }}" {% if aba == 'requisitos' %}aria-current="page"{% endif %}>Requisitos</a>
+  <a href="{{ url_for('main.codigo', projeto_id=projeto.id) }}" {% if aba == 'codigo' %}aria-current="page"{% endif %}>Código</a>
+  <a href="{{ url_for('main.testes', projeto_id=projeto.id) }}" {% if aba == 'testes' %}aria-current="page"{% endif %}>Testes</a>
+  <a href="{{ url_for('main.revisao', projeto_id=projeto.id) }}" {% if aba == 'revisao' %}aria-current="page"{% endif %}>Revisão de vínculos</a>
+  <a href="{{ url_for('main.localizar', projeto_id=projeto.id) }}" {% if aba == 'localizar' %}aria-current="page"{% endif %}>Localizar erro</a>
+</nav>
+{% block projeto %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,167 @@
+{
+  "projeto": "biblioteca_javascript",
+  "descricao": "Projeto 3 — JavaScript (Node.js) + MongoDB (documentos)",
+  "criterios": [
+    "Requisito -> código: elementos que implementam diretamente o comportamento do requisito (método de serviço, funções de validação e de cálculo e, no projeto HTML, também o formulário e a função de tela). Para o RNF-01 (persistência), a classe de acesso ao banco de dados.",
+    "Requisito -> teste: testes que verificam o requisito.",
+    "Teste -> código: elementos de produção chamados diretamente no corpo do teste (inclui classes instanciadas, getters e referências a métodos). Dublês de teste e funções auxiliares não entram."
+  ],
+  "vinculos": [
+    {
+      "origem": "RF-01",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/validacoes.js::validarIsbn"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/validacoes.js::validarEmail"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/validacoes.js::calcularMulta"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/modelos.js::Emprestimo.diasDeAtraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.buscarLivros"
+    },
+    {
+      "origem": "RNF-01",
+      "destino": "src/repositorioMongo.js::RepositorioMongo"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/livros.test.js::Cadastro de livros > RF-01 cadastra livro com ISBN válido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/livros.test.js::Cadastro de livros > rejeita ISBN inválido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/livros.test.js::Cadastro de livros > rejeita ISBN repetido"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "test/leitores.test.js::Cadastro de leitores > cadastra leitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "test/leitores.test.js::Cadastro de leitores > RF-02 rejeita e-mail inválido"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "test/emprestimos.test.js::Empréstimos e devoluções > empresta livro disponível"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "test/emprestimos.test.js::Empréstimos e devoluções > limite de três empréstimos ativos"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "test/emprestimos.test.js::Empréstimos e devoluções > devolução no prazo não gera multa"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "test/emprestimos.test.js::Empréstimos e devoluções > multa por dias de atraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "test/busca.test.js::busca por título ou autor sem diferenciar maiúsculas"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > RF-01 cadastra livro com ISBN válido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > RF-01 cadastra livro com ISBN válido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > rejeita ISBN inválido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > rejeita ISBN inválido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > rejeita ISBN repetido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/livros.test.js::Cadastro de livros > rejeita ISBN repetido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/leitores.test.js::Cadastro de leitores > cadastra leitor",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/leitores.test.js::Cadastro de leitores > cadastra leitor",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "test/leitores.test.js::Cadastro de leitores > RF-02 rejeita e-mail inválido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/leitores.test.js::Cadastro de leitores > RF-02 rejeita e-mail inválido",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > empresta livro disponível",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > limite de três empréstimos ativos",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > devolução no prazo não gera multa",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > devolução no prazo não gera multa",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > multa por dias de atraso",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/emprestimos.test.js::Empréstimos e devoluções > multa por dias de atraso",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "test/busca.test.js::busca por título ou autor sem diferenciar maiúsculas",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca"
+    },
+    {
+      "origem": "test/busca.test.js::busca por título ou autor sem diferenciar maiúsculas",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/busca.test.js::busca por título ou autor sem diferenciar maiúsculas",
+      "destino": "src/servicoBiblioteca.js::ServicoBiblioteca.buscarLivros"
+    }
+  ]
+}

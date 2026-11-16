@@ -1,0 +1,70 @@
+{% macro confianca(v) -%}
+  {%- set f = v.confianca|faixa -%}
+  <span class="selo selo-{{ f }}" title="Confiança {{ ROTULOS_FAIXA[f]|lower }}">{{ v.confianca|decimal }}</span>
+{%- endmacro %}
+
+{% macro status(v) -%}
+  <span class="status status-{{ v.status }}">{{ ROTULOS_STATUS[v.status] }}</span>
+{%- endmacro %}
+
+{% macro estrategias(v) -%}
+  {%- for e in v.estrategias -%}
+    <span class="estrategia" title="{{ ROTULOS_ESTRATEGIA[e] }}">{{ e }}</span>
+  {%- endfor -%}
+{%- endmacro %}
+
+{% macro tipo(e) -%}
+  <span class="tipo tipo-{{ e.tipo }}">{{ ROTULOS_TIPO[e.tipo] }}</span>
+{%- endmacro %}
+
+{% macro link_elemento(projeto, e) -%}
+  <a href="{{ url_for('main.elemento', projeto_id=projeto.id, elemento_id=e.id) }}" class="elemento">
+    {%- if e.eh_requisito -%}<strong>{{ e.identificador }}</strong> {{ e.nome }}
+    {%- else -%}<code>{{ e.identificador }}</code>{%- endif -%}
+  </a>
+{%- endmacro %}
+
+{% macro evidencias(v) -%}
+  <details class="evidencias">
+    <summary>Por que este vínculo?</summary>
+    <ul>
+      {% for ev in v.evidencias %}
+        <li><span class="estrategia">{{ ev.estrategia }}</span> {{ ev.detalhe }}</li>
+      {% endfor %}
+    </ul>
+  </details>
+{%- endmacro %}
+
+{% macro decisao(projeto, v, voltar) -%}
+  <div class="decisao">
+    {% if v.status != 'confirmado' %}
+    <form method="post" action="{{ url_for('main.decidir', projeto_id=projeto.id, vinculo_id=v.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="acao" value="confirmar">
+      <input type="hidden" name="voltar" value="{{ voltar }}">
+      <button type="submit" class="botao botao-pequeno botao-confirmar">Confirmar</button>
+    </form>
+    {% endif %}
+    {% if v.status != 'rejeitado' %}
+    <form method="post" action="{{ url_for('main.decidir', projeto_id=projeto.id, vinculo_id=v.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="acao" value="rejeitar">
+      <input type="hidden" name="voltar" value="{{ voltar }}">
+      <button type="submit" class="botao botao-pequeno botao-rejeitar">Rejeitar</button>
+    </form>
+    {% endif %}
+  </div>
+{%- endmacro %}
+
+{% macro lista_vinculos(projeto, vinculos, lado, vazio) -%}
+  {% if vinculos %}
+    <ul class="mini-lista">
+      {% for v in vinculos %}
+        {% set e = v.destino if lado == 'destino' else v.origem %}
+        <li>{{ link_elemento(projeto, e) }} {{ confianca(v) }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <span class="vazio">{{ vazio }}</span>
+  {% endif %}
+{%- endmacro %}

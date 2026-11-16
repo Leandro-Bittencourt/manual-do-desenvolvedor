@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Enviar projeto · Manual do Desenvolvedor{% endblock %}
+{% block conteudo %}
+<section class="cartao formulario-medio">
+  <h1>Enviar projeto</h1>
+  <p class="subtitulo">O arquivo é analisado localmente e descartado ao final. Ficam guardadas apenas as referências
+     (arquivo e linhas) dos elementos encontrados.</p>
+  {% if erro %}<div class="alerta alerta-erro">{{ erro }}</div>{% endif %}
+  <form method="post" enctype="multipart/form-data" data-processando="Analisando o projeto...">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Nome do projeto <small>(opcional — por padrão, o nome do arquivo)</small>
+      <input type="text" name="nome" value="{{ nome }}" maxlength="160">
+    </label>
+    <label>Arquivo .zip do projeto
+      <input type="file" name="arquivo" accept=".zip" required>
+    </label>
+    <button type="submit" class="botao botao-largo">Enviar e analisar</button>
+  </form>
+  <div class="dica">
+    <h2>Como preparar o projeto</h2>
+    <ul>
+      <li><strong>Requisitos:</strong> um arquivo cujo nome contenha "requisito" ou "requirement"
+          (<code>requisitos.md</code>, <code>.csv</code> ou <code>.json</code>), com identificadores como <code>RF-01</code>.</li>
+      <li><strong>Linguagens:</strong> Python, Java, JavaScript e HTML (elementos de interface com <code>id</code>).</li>
+      <li><strong>Testes:</strong> pytest/unittest (<code>test_*.py</code>), JUnit (<code>*Test.java</code>, métodos com
+          <code>@Test</code>) e JavaScript (<code>*.test.js</code> ou <code>*.spec.js</code>, com <code>test()</code> ou <code>it()</code>).</li>
+      <li><strong>Marcação explícita (opcional):</strong> cite o requisito em comentários, docstrings ou no nome do teste,
+          por exemplo <code># @traces RF-01</code> ou <code>test_rf01_login</code>.</li>
+      <li>Arquivos sensíveis (<code>.env</code>, chaves, credenciais) são ignorados automaticamente.</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

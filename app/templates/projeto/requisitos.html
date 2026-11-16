@@ -1,0 +1,34 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, lista_vinculos %}
+{% block projeto %}
+<div class="filtros">
+  <span>Mostrar:</span>
+  <a href="{{ url_for('main.requisitos', projeto_id=projeto.id) }}" {% if filtro == 'todos' %}aria-current="true"{% endif %}>Todos</a>
+  <a href="{{ url_for('main.requisitos', projeto_id=projeto.id, filtro='sem_codigo') }}" {% if filtro == 'sem_codigo' %}aria-current="true"{% endif %}>Sem código</a>
+  <a href="{{ url_for('main.requisitos', projeto_id=projeto.id, filtro='sem_teste') }}" {% if filtro == 'sem_teste' %}aria-current="true"{% endif %}>Sem teste</a>
+</div>
+
+{% if not linhas %}
+  <section class="cartao"><p class="vazio">Nenhum requisito encontrado para este filtro.</p></section>
+{% else %}
+<div class="tabela-rolagem">
+<table class="tabela">
+  <thead>
+    <tr><th>Requisito</th><th>Código relacionado</th><th>Testes relacionados</th></tr>
+  </thead>
+  <tbody>
+  {% for l in linhas %}
+    <tr>
+      <td class="coluna-requisito">
+        {{ link_elemento(projeto, l.requisito) }}
+        {% if l.requisito.descricao %}<p class="descricao">{{ l.requisito.descricao }}</p>{% endif %}
+      </td>
+      <td>{{ lista_vinculos(projeto, l.codigo, 'destino', 'Nenhum código associado') }}</td>
+      <td>{{ lista_vinculos(projeto, l.testes, 'destino', 'Nenhum teste associado') }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

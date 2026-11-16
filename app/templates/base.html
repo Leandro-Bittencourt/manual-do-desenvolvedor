@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Manual do Desenvolvedor{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-conteudo">
+      <a class="marca" href="{{ url_for('main.inicio') }}">
+        <span class="marca-icone" aria-hidden="true">⌘</span> Manual do Desenvolvedor
+      </a>
+      {% if current_user.is_authenticated %}
+      <nav class="topo-nav">
+        <a href="{{ url_for('main.painel') }}">Projetos</a>
+        <a class="botao botao-pequeno" href="{{ url_for('main.novo_projeto') }}">Enviar projeto</a>
+        <span class="usuario">{{ current_user.nome }}</span>
+        <form method="post" action="{{ url_for('auth.sair') }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="link">Sair</button>
+        </form>
+      </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="conteudo">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% for categoria, mensagem in mensagens %}
+        <div class="alerta alerta-{{ categoria }}" role="status">{{ mensagem }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape">
+    Processamento 100% local — nenhum código ou requisito é enviado a serviços externos.
+  </footer>
+</body>
+</html>

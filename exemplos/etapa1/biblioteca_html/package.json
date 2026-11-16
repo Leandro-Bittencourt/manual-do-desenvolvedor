@@ -1,0 +1,13 @@
+{
+  "name": "biblioteca-html",
+  "version": "1.0.0",
+  "description": "Projeto controlado 4 — HTML + JavaScript no navegador, com armazenamento chave-valor (localStorage)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/biblioteca.test.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1"
+  }
+}

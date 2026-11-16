@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Cadastro · Manual do Desenvolvedor{% endblock %}
+{% block conteudo %}
+<section class="cartao formulario-estreito">
+  <h1>Criar conta</h1>
+  {% if erros %}
+    <div class="alerta alerta-erro"><ul>{% for e in erros %}<li>{{ e }}</li>{% endfor %}</ul></div>
+  {% endif %}
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Nome
+      <input type="text" name="nome" value="{{ dados.nome }}" required autofocus autocomplete="name">
+    </label>
+    <label>E-mail
+      <input type="email" name="email" value="{{ dados.email }}" required autocomplete="email">
+    </label>
+    <label>Senha <small>(mínimo de 8 caracteres)</small>
+      <input type="password" name="senha" required minlength="8" autocomplete="new-password">
+    </label>
+    <label>Confirme a senha
+      <input type="password" name="confirmacao" required minlength="8" autocomplete="new-password">
+    </label>
+    <button type="submit" class="botao botao-largo">Criar conta</button>
+  </form>
+  <p class="rodape-formulario">Já tem conta? <a href="{{ url_for('auth.entrar') }}">Entrar</a></p>
+</section>
+{% endblock %}

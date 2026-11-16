@@ -1,0 +1,179 @@
+{
+  "projeto": "biblioteca_java",
+  "descricao": "Projeto 2 — Java + Neo4j (grafo)",
+  "criterios": [
+    "Requisito -> código: elementos que implementam diretamente o comportamento do requisito (método de serviço, funções de validação e de cálculo e, no projeto HTML, também o formulário e a função de tela). Para o RNF-01 (persistência), a classe de acesso ao banco de dados.",
+    "Requisito -> teste: testes que verificam o requisito.",
+    "Teste -> código: elementos de produção chamados diretamente no corpo do teste (inclui classes instanciadas, getters e referências a métodos). Dublês de teste e funções auxiliares não entram."
+  ],
+  "vinculos": [
+    {
+      "origem": "RF-01",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/main/java/br/biblioteca/servico/Validacoes.java::Validacoes.validarIsbn"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/main/java/br/biblioteca/servico/Validacoes.java::Validacoes.validarEmail"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/main/java/br/biblioteca/servico/Validacoes.java::Validacoes.calcularMulta"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/main/java/br/biblioteca/modelo/Emprestimo.java::Emprestimo.diasDeAtraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.buscarLivros"
+    },
+    {
+      "origem": "RNF-01",
+      "destino": "src/main/java/br/biblioteca/repositorio/RepositorioNeo4j.java::RepositorioNeo4j"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rf01CadastraLivroComIsbnValido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnInvalido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnRepetido"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.cadastraLeitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.rf02RejeitaEmailInvalido"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.emprestaLivroDisponivel"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.limiteDeTresEmprestimosAtivos"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.devolucaoNoPrazoNaoGeraMulta"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.multaPorDiasDeAtraso"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "src/test/java/br/biblioteca/BuscaTest.java::BuscaTest.buscaPorTituloOuAutorSemDiferenciarMaiusculas"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rf01CadastraLivroComIsbnValido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rf01CadastraLivroComIsbnValido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rf01CadastraLivroComIsbnValido",
+      "destino": "src/main/java/br/biblioteca/modelo/Livro.java::Livro.isDisponivel"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnInvalido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnInvalido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnRepetido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LivrosTest.java::LivrosTest.rejeitaIsbnRepetido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.cadastraLeitor",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.cadastraLeitor",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.rf02RejeitaEmailInvalido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/LeitoresTest.java::LeitoresTest.rf02RejeitaEmailInvalido",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.emprestaLivroDisponivel",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.emprestaLivroDisponivel",
+      "destino": "src/main/java/br/biblioteca/modelo/Livro.java::Livro.isDisponivel"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.limiteDeTresEmprestimosAtivos",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.devolucaoNoPrazoNaoGeraMulta",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.devolucaoNoPrazoNaoGeraMulta",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.multaPorDiasDeAtraso",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/EmprestimosTest.java::EmprestimosTest.multaPorDiasDeAtraso",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/BuscaTest.java::BuscaTest.buscaPorTituloOuAutorSemDiferenciarMaiusculas",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/BuscaTest.java::BuscaTest.buscaPorTituloOuAutorSemDiferenciarMaiusculas",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/BuscaTest.java::BuscaTest.buscaPorTituloOuAutorSemDiferenciarMaiusculas",
+      "destino": "src/main/java/br/biblioteca/servico/ServicoBiblioteca.java::ServicoBiblioteca.buscarLivros"
+    },
+    {
+      "origem": "src/test/java/br/biblioteca/BuscaTest.java::BuscaTest.buscaPorTituloOuAutorSemDiferenciarMaiusculas",
+      "destino": "src/main/java/br/biblioteca/modelo/Livro.java::Livro.getTitulo"
+    }
+  ]
+}

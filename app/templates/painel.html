@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Projetos · Manual do Desenvolvedor{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-pagina">
+  <div>
+    <h1>Seus projetos</h1>
+    <p class="subtitulo">Cada envio de .zip gera uma nova versão analisada do projeto.</p>
+  </div>
+  <a class="botao" href="{{ url_for('main.novo_projeto') }}">Enviar projeto</a>
+</div>
+
+{% if not linhas %}
+  <section class="cartao vazio-grande">
+    <h2>Nenhum projeto ainda</h2>
+    <p>Envie um projeto Python compactado em .zip, com um arquivo de requisitos (por exemplo, <code>requisitos.md</code>),
+       o código-fonte e os testes. A ferramenta identifica os artefatos e sugere os vínculos entre eles.</p>
+    <a class="botao" href="{{ url_for('main.novo_projeto') }}">Enviar o primeiro projeto</a>
+  </section>
+{% else %}
+  <div class="grade-projetos">
+    {% for linha in linhas %}
+      {% set p = linha.projeto %}{% set r = linha.resumo %}
+      <a class="cartao cartao-projeto" href="{{ url_for('main.visao_geral', projeto_id=p.id) }}">
+        <h2>{{ p.nome }}</h2>
+        <p class="meta">Versão {{ p.versao_atual.numero }} · {{ p.versao_atual.enviado_em|data }}</p>
+        <dl class="numeros">
+          <div><dt>Requisitos</dt><dd>{{ r.requisitos }}</dd></div>
+          <div><dt>Testes</dt><dd>{{ r.testes }}</dd></div>
+          <div><dt>Código</dt><dd>{{ r.codigo }}</dd></div>
+          <div><dt>Vínculos</dt><dd>{{ r.vinculos }}</dd></div>
+        </dl>
+        <div class="barras">
+          <div class="barra-rotulo">Requisitos com código <span>{{ r.cobertura_codigo|percentual }}</span></div>
+          <progress class="barra" max="1" value="{{ r.cobertura_codigo }}"></progress>
+          <div class="barra-rotulo">Requisitos com teste <span>{{ r.cobertura_testes|percentual }}</span></div>
+          <progress class="barra" max="1" value="{{ r.cobertura_testes }}"></progress>
+        </div>
+        {% if r.pendentes %}<p class="pendentes">{{ r.pendentes }} vínculo(s) aguardando revisão</p>{% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

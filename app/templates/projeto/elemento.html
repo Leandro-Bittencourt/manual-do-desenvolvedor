@@ -1,0 +1,41 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, confianca, status, estrategias, evidencias, decisao, tipo %}
+{% block projeto %}
+<section class="cartao">
+  <p>{{ tipo(item) }}</p>
+  {% if item.eh_requisito %}
+    <h2>{{ item.identificador }} — {{ item.nome }}</h2>
+    {% if item.descricao %}<p>{{ item.descricao }}</p>{% endif %}
+    <p class="meta">Definido em {{ item.localizacao }}</p>
+  {% else %}
+    <h2><code>{{ item.identificador }}</code></h2>
+    <p class="meta">{{ item.localizacao }}</p>
+  {% endif %}
+</section>
+
+<section class="cartao">
+  <h2>Vínculos</h2>
+  {% if not vinculos %}
+    <p class="vazio">Nenhum vínculo encontrado para este elemento.</p>
+  {% else %}
+  <div class="tabela-rolagem">
+  <table class="tabela">
+    <thead><tr><th>Relacionado a</th><th>Onde está</th><th>Confiança</th><th>Estratégias</th><th>Situação</th><th></th></tr></thead>
+    <tbody>
+    {% for v in vinculos %}
+      {% set outro = v.destino if v.origem_id == item.id else v.origem %}
+      <tr class="{% if v.status == 'rejeitado' %}rejeitado{% endif %}">
+        <td>{{ tipo(outro) }} {{ link_elemento(projeto, outro) }}{{ evidencias(v) }}</td>
+        <td class="localizacao">{{ outro.localizacao }}</td>
+        <td>{{ confianca(v) }}</td>
+        <td>{{ estrategias(v) }}</td>
+        <td>{{ status(v) }}</td>
+        <td>{{ decisao(projeto, v, request.full_path) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

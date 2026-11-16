@@ -1,0 +1,11 @@
+{
+  "projeto": "Sistema de Biblioteca — projeto controlado 3 (JavaScript + MongoDB, modelo de documentos)",
+  "requisitos": [
+    {"id": "RF-01", "titulo": "Cadastro de livro", "descricao": "O sistema deve cadastrar livros com título, autor e ISBN, validando o ISBN e impedindo o cadastro de um ISBN repetido."},
+    {"id": "RF-02", "titulo": "Cadastro de leitor", "descricao": "O sistema deve cadastrar leitores com nome e e-mail, validando o formato do e-mail."},
+    {"id": "RF-03", "titulo": "Empréstimo de livro", "descricao": "O leitor pode pegar um livro emprestado se o livro estiver disponível e se ele tiver menos de 3 empréstimos ativos."},
+    {"id": "RF-04", "titulo": "Devolução e multa por atraso", "descricao": "Na devolução do livro, o sistema deve calcular a multa de R$ 2,00 por dia de atraso após o prazo de 14 dias."},
+    {"id": "RF-05", "titulo": "Busca de livros", "descricao": "O sistema deve buscar livros por título ou autor, sem diferenciar letras maiúsculas e minúsculas."},
+    {"id": "RNF-01", "titulo": "Persistência", "descricao": "Os dados de livros, leitores e empréstimos devem ser gravados no banco de dados."}
+  ]
+}

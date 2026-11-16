@@ -1,0 +1,116 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, confianca, tipo %}
+{% block projeto %}
+<section class="cartao">
+  <h2>Localizar a origem de um erro</h2>
+  <p>Cole a mensagem de erro (<em>traceback</em> do Python ou saída do pytest) ou o nome do teste que falhou.
+     A ferramenta identifica a função de origem e mostra os requisitos e testes relacionados.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <textarea name="erro" rows="9" spellcheck="false" placeholder='Traceback (most recent call last):
+  File "/home/dev/loja/src/loja/carrinho.py", line 42, in calcular_total
+    ...
+ou: tests/test_carrinho.py::test_total_com_cupom'>{{ texto }}</textarea>
+    <button type="submit" class="botao">Localizar</button>
+  </form>
+</section>
+
+{% if resultado is not none %}
+  {% if resultado.origem is none %}
+    <section class="cartao">
+      <h2>Origem não encontrada</h2>
+      <p>Nenhum arquivo ou linha do erro corresponde a um elemento deste projeto. Confira se o erro é desta versão do
+         código ou informe o nome do teste que falhou.</p>
+      {% if resultado.pilha %}
+        <ul class="mini-lista">
+          {% for p in resultado.pilha %}<li><code>{{ p.quadro.arquivo }}:{{ p.quadro.linha }}</code></li>{% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% else %}
+    {% set o = resultado.origem %}
+    <section class="cartao destaque">
+      <p>{{ tipo(o) }}</p>
+      <h2>Provável origem: {{ link_elemento(projeto, o) }}</h2>
+      <p class="meta">{{ o.localizacao }}</p>
+      {% if resultado.pilha|length > 1 %}
+        <details>
+          <summary>Caminho do erro dentro do projeto</summary>
+          <ol class="mini-lista">
+            {% for p in resultado.pilha if p.elemento %}
+              <li><code>{{ p.elemento.identificador }}</code> — {{ p.arquivo }}, linha {{ p.quadro.linha }}</li>
+            {% endfor %}
+          </ol>
+        </details>
+      {% endif %}
+    </section>
+
+    <div class="duas-colunas">
+      <section class="cartao">
+        <h2>Requisitos relacionados</h2>
+        {% if resultado.requisitos %}
+          <ul class="mini-lista">
+            {% for v in resultado.requisitos %}
+              <li>{{ link_elemento(projeto, v.origem) }} {{ confianca(v) }}
+                {% if v.origem.descricao %}<p class="descricao">{{ v.origem.descricao }}</p>{% endif %}</li>
+            {% endfor %}
+          </ul>
+        {% elif resultado.requisitos_indiretos %}
+          <p class="subtitulo">Este elemento não tem requisito vinculado diretamente. Requisitos herdados pelo grafo de chamadas:</p>
+          <ul class="mini-lista">
+            {% for item in resultado.requisitos_indiretos %}
+              <li>{{ link_elemento(projeto, item.requisito) }}
+                <div class="localizacao">via {{ item.via|map(attribute='identificador')|unique|join(', ') }}</div></li>
+            {% endfor %}
+          </ul>
+        {% else %}<p class="vazio">Nenhum requisito vinculado a este elemento.</p>{% endif %}
+      </section>
+
+      <section class="cartao">
+        {% if o.eh_teste %}
+          <h2>Código exercitado pelo teste</h2>
+          {% if resultado.codigo %}
+            <ul class="mini-lista">
+              {% for v in resultado.codigo %}
+                <li>{{ link_elemento(projeto, v.destino) }} {{ confianca(v) }}
+                  <div class="localizacao">{{ v.destino.localizacao }}</div></li>
+              {% endfor %}
+            </ul>
+          {% else %}<p class="vazio">Nenhuma chamada identificada.</p>{% endif %}
+          {% if resultado.codigo_indireto %}
+            <h3>Chamado indiretamente</h3>
+            <ul class="mini-lista">
+              {% for e in resultado.codigo_indireto %}
+                <li>{{ link_elemento(projeto, e) }} <div class="localizacao">{{ e.localizacao }}</div></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% else %}
+          <h2>Testes para executar novamente</h2>
+          {% if resultado.testes %}
+            <ul class="mini-lista">
+              {% for v in resultado.testes %}
+                {% set t = v.origem if v.origem.eh_teste else v.destino %}
+                <li>{{ link_elemento(projeto, t) }} {{ confianca(v) }}
+                  <div class="localizacao">{{ t.localizacao }}</div></li>
+              {% endfor %}
+            </ul>
+          {% else %}<p class="vazio">Nenhum teste relacionado.</p>{% endif %}
+        {% endif %}
+      </section>
+    </div>
+
+    {% if resultado.impacto %}
+    <section class="cartao">
+      <h2>Funções que podem ser afetadas</h2>
+      <p class="subtitulo">Elementos que chamam a origem do erro, direta ou indiretamente.</p>
+      <ul class="mini-lista">
+        {% for e in resultado.impacto %}
+          <li>{{ tipo(e) }} {{ link_elemento(projeto, e) }} <span class="localizacao">{{ e.localizacao }}</span></li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  {% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,239 @@
+{
+  "projeto": "biblioteca_html",
+  "descricao": "Projeto 4 — HTML + JavaScript no navegador + localStorage (chave-valor)",
+  "criterios": [
+    "Requisito -> código: elementos que implementam diretamente o comportamento do requisito (método de serviço, funções de validação e de cálculo e, no projeto HTML, também o formulário e a função de tela). Para o RNF-01 (persistência), a classe de acesso ao banco de dados.",
+    "Requisito -> teste: testes que verificam o requisito.",
+    "Teste -> código: elementos de produção chamados diretamente no corpo do teste (inclui classes instanciadas, getters e referências a métodos). Dublês de teste e funções auxiliares não entram."
+  ],
+  "vinculos": [
+    {
+      "origem": "RF-01",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "js/biblioteca.js::validarIsbn"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "js/app.js::aoCadastrarLivro"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "index.html::form#form-livro"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "js/biblioteca.js::validarEmail"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "js/app.js::aoCadastrarLeitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "index.html::form#form-leitor"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "js/app.js::aoEmprestar"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "index.html::form#form-emprestimo"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "js/biblioteca.js::calcularMulta"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "js/biblioteca.js::diasDeAtraso"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "js/app.js::aoDevolver"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "index.html::form#form-devolucao"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.buscarLivros"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "js/app.js::aoBuscar"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "index.html::form#form-busca"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "index.html::ul#lista-resultados"
+    },
+    {
+      "origem": "RNF-01",
+      "destino": "js/armazenamento.js::ArmazenamentoLocal"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/biblioteca.test.js::Cadastro de livros > RF-01 cadastra livro com ISBN válido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/biblioteca.test.js::Cadastro de livros > rejeita ISBN inválido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "test/biblioteca.test.js::Cadastro de livros > rejeita ISBN repetido"
+    },
+    {
+      "origem": "RF-01",
+      "destino": "e2e/biblioteca.spec.js::RF-01 cadastra livro pela interface"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "test/biblioteca.test.js::Cadastro de leitores > cadastra leitor"
+    },
+    {
+      "origem": "RF-02",
+      "destino": "test/biblioteca.test.js::Cadastro de leitores > RF-02 rejeita e-mail inválido"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "test/biblioteca.test.js::Empréstimos e devoluções > empresta livro disponível"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "test/biblioteca.test.js::Empréstimos e devoluções > limite de três empréstimos ativos"
+    },
+    {
+      "origem": "RF-03",
+      "destino": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "test/biblioteca.test.js::Empréstimos e devoluções > devolução no prazo não gera multa"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "test/biblioteca.test.js::Empréstimos e devoluções > multa por dias de atraso"
+    },
+    {
+      "origem": "RF-04",
+      "destino": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "test/biblioteca.test.js::busca por título ou autor sem diferenciar maiúsculas"
+    },
+    {
+      "origem": "RF-05",
+      "destino": "e2e/biblioteca.spec.js::busca livros pela interface"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Cadastro de livros > RF-01 cadastra livro com ISBN válido",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Cadastro de livros > rejeita ISBN inválido",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Cadastro de livros > rejeita ISBN repetido",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Cadastro de leitores > cadastra leitor",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Cadastro de leitores > RF-02 rejeita e-mail inválido",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLeitor"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > empresta livro disponível",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > empresta livro disponível",
+      "destino": "js/armazenamento.js::ArmazenamentoLocal.buscarLivro"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > limite de três empréstimos ativos",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > devolução no prazo não gera multa",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > devolução no prazo não gera multa",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > multa por dias de atraso",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.emprestar"
+    },
+    {
+      "origem": "test/biblioteca.test.js::Empréstimos e devoluções > multa por dias de atraso",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.devolver"
+    },
+    {
+      "origem": "test/biblioteca.test.js::busca por título ou autor sem diferenciar maiúsculas",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.cadastrarLivro"
+    },
+    {
+      "origem": "test/biblioteca.test.js::busca por título ou autor sem diferenciar maiúsculas",
+      "destino": "js/biblioteca.js::ServicoBiblioteca.buscarLivros"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::RF-01 cadastra livro pela interface",
+      "destino": "index.html::form#form-livro"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface",
+      "destino": "index.html::form#form-livro"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface",
+      "destino": "index.html::form#form-leitor"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface",
+      "destino": "index.html::form#form-emprestimo"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::empresta e devolve livro pela interface",
+      "destino": "index.html::form#form-devolucao"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::busca livros pela interface",
+      "destino": "index.html::form#form-livro"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::busca livros pela interface",
+      "destino": "index.html::form#form-busca"
+    },
+    {
+      "origem": "e2e/biblioteca.spec.js::busca livros pela interface",
+      "destino": "index.html::ul#lista-resultados"
+    }
+  ]
+}

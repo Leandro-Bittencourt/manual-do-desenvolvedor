@@ -1,0 +1,27 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, lista_vinculos, tipo %}
+{% block projeto %}
+{% if not arquivos %}
+  <section class="cartao"><p class="vazio">Nenhum elemento de código de produção foi encontrado.</p></section>
+{% endif %}
+{% for arquivo, itens in arquivos.items() %}
+<section class="cartao">
+  <h2 class="arquivo"><code>{{ arquivo }}</code></h2>
+  <div class="tabela-rolagem">
+  <table class="tabela">
+    <thead><tr><th>Elemento</th><th>Linhas</th><th>Requisitos</th><th>Testes que o exercitam</th></tr></thead>
+    <tbody>
+    {% for i in itens %}
+      <tr>
+        <td>{{ tipo(i.elemento) }} {{ link_elemento(projeto, i.elemento) }}</td>
+        <td class="localizacao">{{ i.elemento.linha_inicio }}–{{ i.elemento.linha_fim }}</td>
+        <td>{{ lista_vinculos(projeto, i.requisitos, 'origem', '—') }}</td>
+        <td>{{ lista_vinculos(projeto, i.testes, 'origem', '—') }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

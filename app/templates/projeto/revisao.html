@@ -1,0 +1,49 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento, confianca, status, estrategias, evidencias, decisao, tipo %}
+{% block projeto %}
+<p class="subtitulo">A ferramenta sugere vínculos; você confirma ou rejeita. Vínculos rejeitados não voltam a ser
+   sugeridos, e os confirmados são mantidos nas próximas versões enquanto o código não mudar.</p>
+
+<form class="filtros" method="get">
+  <label>Situação
+    <select name="situacao">
+      {% for valor, rotulo in [('pendentes', 'Pendentes'), ('sugerido', 'Sugeridos'), ('a_revisar', 'A revisar'),
+                               ('confirmado', 'Confirmados'), ('rejeitado', 'Rejeitados'), ('todos', 'Todos')] %}
+        <option value="{{ valor }}" {% if situacao == valor %}selected{% endif %}>{{ rotulo }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Confiança
+    <select name="faixa">
+      {% for valor, rotulo in [('todas', 'Todas'), ('alta', 'Alta'), ('media', 'Média'), ('baixa', 'Baixa')] %}
+        <option value="{{ valor }}" {% if faixa_escolhida == valor %}selected{% endif %}>{{ rotulo }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="botao botao-pequeno">Filtrar</button>
+</form>
+
+{% if not vinculos %}
+  <section class="cartao"><p class="vazio">Nenhum vínculo nesta situação.</p></section>
+{% else %}
+<div class="tabela-rolagem">
+<table class="tabela">
+  <thead><tr><th>Origem</th><th>Destino</th><th>Confiança</th><th>Estratégias</th><th>Situação</th><th></th></tr></thead>
+  <tbody>
+  {% for v in vinculos %}
+    <tr>
+      <td>{{ tipo(v.origem) }} {{ link_elemento(projeto, v.origem) }}</td>
+      <td>{{ tipo(v.destino) }} {{ link_elemento(projeto, v.destino) }}
+          <div class="localizacao">{{ v.destino.localizacao }}</div>
+          {{ evidencias(v) }}</td>
+      <td>{{ confianca(v) }}</td>
+      <td>{{ estrategias(v) }}</td>
+      <td>{{ status(v) }}</td>
+      <td>{{ decisao(projeto, v, request.full_path) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

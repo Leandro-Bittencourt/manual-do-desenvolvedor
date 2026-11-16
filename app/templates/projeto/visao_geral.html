@@ -1,0 +1,93 @@
+{% extends "projeto/_base.html" %}
+{% from "_macros.html" import link_elemento %}
+{% block projeto %}
+{% set m = versao.metricas %}
+<div class="grade-indicadores">
+  <div class="indicador"><span>Requisitos</span><strong>{{ resumo.requisitos }}</strong></div>
+  <div class="indicador"><span>Casos de teste</span><strong>{{ resumo.testes }}</strong></div>
+  <div class="indicador"><span>Elementos de código</span><strong>{{ resumo.codigo }}</strong></div>
+  <div class="indicador"><span>Vínculos ativos</span><strong>{{ resumo.vinculos }}</strong></div>
+  <div class="indicador"><span>Requisitos com código</span><strong>{{ resumo.cobertura_codigo|percentual }}</strong></div>
+  <div class="indicador"><span>Requisitos com teste</span><strong>{{ resumo.cobertura_testes|percentual }}</strong></div>
+</div>
+
+{% if resumo.pendentes %}
+<div class="alerta alerta-aviso">
+  {{ resumo.pendentes }} vínculo(s) aguardando revisão{% if resumo.a_revisar %}, dos quais {{ resumo.a_revisar }}
+  foram confirmados antes e precisam ser revistos porque o código mudou{% endif %}.
+  <a href="{{ url_for('main.revisao', projeto_id=projeto.id) }}">Revisar agora</a>
+</div>
+{% endif %}
+
+<div class="duas-colunas">
+  <section class="cartao">
+    <h2>Lacunas de cobertura</h2>
+    <h3>Requisitos sem código associado</h3>
+    {% if resumo.sem_codigo %}
+      <ul class="mini-lista">{% for r in resumo.sem_codigo %}<li>{{ link_elemento(projeto, r) }}</li>{% endfor %}</ul>
+    {% else %}<p class="vazio">Todos os requisitos têm código associado.</p>{% endif %}
+    <h3>Requisitos sem teste associado</h3>
+    {% if resumo.sem_teste %}
+      <ul class="mini-lista">{% for r in resumo.sem_teste %}<li>{{ link_elemento(projeto, r) }}</li>{% endfor %}</ul>
+    {% else %}<p class="vazio">Todos os requisitos têm teste associado.</p>{% endif %}
+  </section>
+
+  <section class="cartao">
+    <h2>Execução da análise</h2>
+    <table class="tabela-simples">
+      <tr><th>Tempo de processamento</th><td>{{ m.tempo_ms }} ms</td></tr>
+      <tr><th>Arquivos analisados</th><td>{{ m.arquivos_analisados }}</td></tr>
+      {% for linguagem, n in (m.arquivos_por_linguagem or {}).items() %}
+      <tr><th class="recuo">{{ ROTULOS_LINGUAGEM.get(linguagem, linguagem) }}</th><td>{{ n }}</td></tr>
+      {% endfor %}
+      <tr><th>Arquivos ignorados</th><td>{{ m.arquivos_ignorados or 0 }}</td></tr>
+      <tr><th>Arquivos sensíveis ignorados</th><td>{{ m.arquivos_sensiveis_ignorados or 0 }}</td></tr>
+      <tr><th>Vínculos sugeridos</th><td>{{ m.vinculos }}</td></tr>
+      {% for e, n in (m.vinculos_por_estrategia or {}).items() %}
+      <tr><th class="recuo">{{ ROTULOS_ESTRATEGIA[e] }}</th><td>{{ n }}</td></tr>
+      {% endfor %}
+      {% for f, n in (m.vinculos_por_faixa or {}).items() %}
+      <tr><th class="recuo">Confiança {{ ROTULOS_FAIXA[f]|lower }}</th><td>{{ n }}</td></tr>
+      {% endfor %}
+    </table>
+    <p><a href="{{ url_for('main.exportar', projeto_id=projeto.id) }}">Exportar resultado em JSON</a></p>
+  </section>
+</div>
+
+{% if versao.avisos %}
+<section class="cartao">
+  <h2>Avisos da análise</h2>
+  <ul class="avisos">{% for a in versao.avisos %}<li>{{ a }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+<div class="duas-colunas">
+  <section class="cartao">
+    <h2>Enviar nova versão</h2>
+    <p>Os vínculos que você confirmou ou rejeitou são mantidos. Se o código de um vínculo confirmado mudar,
+       ele volta para a revisão.</p>
+    <form method="post" action="{{ url_for('main.nova_versao', projeto_id=projeto.id) }}" enctype="multipart/form-data"
+          data-processando="Analisando a nova versão...">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="arquivo" accept=".zip" required>
+      <button type="submit" class="botao">Enviar versão</button>
+    </form>
+    <h3>Histórico</h3>
+    <ul class="mini-lista">
+      {% for v in projeto.versoes|reverse %}
+        <li>Versão {{ v.numero }} — {{ v.nome_arquivo }} ({{ v.enviado_em|data }})</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="cartao zona-perigo">
+    <h2>Excluir projeto</h2>
+    <p>Remove o projeto, todas as versões, vínculos e decisões. Esta ação não pode ser desfeita.</p>
+    <form method="post" action="{{ url_for('main.excluir_projeto', projeto_id=projeto.id) }}"
+          data-confirmar="Excluir o projeto &quot;{{ projeto.nome }}&quot; e todos os seus dados? Esta ação não pode ser desfeita.">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="botao botao-rejeitar">Excluir projeto</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

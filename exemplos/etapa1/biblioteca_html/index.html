@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Biblioteca</title>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <h1>Biblioteca</h1>
+  <p id="mensagem" role="status"></p>
+
+  <!-- @traces RF-01 -->
+  <form id="form-livro">
+    <h2>Cadastrar livro</h2>
+    <label for="livro-titulo">Título</label>
+    <input id="livro-titulo" name="titulo" required>
+    <label for="livro-autor">Autor</label>
+    <input id="livro-autor" name="autor" required>
+    <label for="livro-isbn">ISBN</label>
+    <input id="livro-isbn" name="isbn" placeholder="ISBN com 13 dígitos" required>
+    <button type="submit">Cadastrar livro</button>
+  </form>
+
+  <form id="form-leitor">
+    <h2>Cadastrar leitor</h2>
+    <label for="leitor-nome">Nome</label>
+    <input id="leitor-nome" name="nome" required>
+    <label for="leitor-email">E-mail</label>
+    <input id="leitor-email" name="email" type="email" required>
+    <button type="submit">Cadastrar leitor</button>
+  </form>
+
+  <form id="form-emprestimo" data-requisito="RF-03">
+    <h2>Emprestar livro</h2>
+    <label for="emprestimo-isbn">ISBN do livro</label>
+    <input id="emprestimo-isbn" name="isbn" required>
+    <label for="emprestimo-email">E-mail do leitor</label>
+    <input id="emprestimo-email" name="email" type="email" required>
+    <button type="submit">Emprestar</button>
+  </form>
+
+  <form id="form-devolucao">
+    <h2>Devolver livro</h2>
+    <label for="devolucao-isbn">ISBN do livro devolvido</label>
+    <input id="devolucao-isbn" name="isbn" required>
+    <button type="submit">Registrar devolução e calcular multa</button>
+  </form>
+
+  <form id="form-busca">
+    <h2>Buscar livros</h2>
+    <label for="termo-busca">Título ou autor</label>
+    <input id="termo-busca" name="termo" type="search" placeholder="Buscar por título ou autor">
+    <button type="submit">Buscar</button>
+  </form>
+  <ul id="lista-resultados" aria-label="Livros encontrados na busca"></ul>
+</body>
+</html>

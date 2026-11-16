@@ -1,0 +1,11 @@
+services:
+  manual-do-desenvolvedor:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - dados:/app/instance
+    restart: unless-stopped
+
+volumes:
+  dados:
